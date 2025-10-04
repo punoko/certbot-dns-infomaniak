@@ -1,6 +1,6 @@
 [build-system]
-requires = ["setuptools"]
-build-backend = "setuptools.build_meta"
+requires = ["uv_build"]
+build-backend = "uv_build"
 
 [project]
 name = "certbot-dns-infomaniak"
@@ -45,6 +45,16 @@ dns-infomaniak = "certbot_dns_infomaniak.dns_infomaniak:Authenticator"
 
 [dependency-groups]
 dev = [
-    "flake8",
     "pytest",
+    "ruff",
 ]
+
+[tool.ruff]
+line-length = 127 # The GitHub editor is 127 chars wide
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = []
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"

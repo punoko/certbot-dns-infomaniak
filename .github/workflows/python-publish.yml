@@ -17,23 +17,20 @@ jobs:
     - name: Get the version
       id: get_version
       run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
-    - uses: actions/checkout@v2
-    - name: Set up Python
-      uses: actions/setup-python@v2
+    - uses: actions/checkout@v5
+    - name: Set up Python with uv
+      uses: astral-sh/setup-uv@v6
       with:
-        python-version: '3.x'
+        version: "latest"
     - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install setuptools wheel twine build
+      run: uv sync --managed-python
     - name: Build and publish
       env:
-        TWINE_USERNAME: __token__
-        TWINE_PASSWORD: ${{ secrets.TWINE_TOKEN }}
+        UV_PUBLISH_TOKEN: ${{ secrets.TWINE_TOKEN }}
       run: |
-        sed -i.bak 's/^version =.*/version = "${{ steps.get_version.outputs.VERSION }}"/' pyproject.toml
-        python -m build
-        twine upload dist/*
+        uv version "${{ steps.get_version.outputs.VERSION }}"
+        uv build
+        uv publish dist/*
 
     - name: Create Release
       id: create_release
