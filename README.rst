@@ -104,6 +104,15 @@ token:
 
    Environment="INFOMANIAK_API_TOKEN=<YOUR_API_TOKEN>"
 
+Local Development
+-----------------
+
+Usage of `uv`_ to manage virtual environments and dependencies as defined in ``pyproject.toml`` is strongly recommended.
+
+.. _uv: https://docs.astral.sh/uv/
+
+Simply run ``uv sync`` to automatically create or update the ``.venv``. Usual activation is not required as all tools can simply be run within the project's environment through ``uv run...``, (eg. ``uv run ruff check``, ``uv run pytest``), eliminating the need for manual requirements management.
+
 Acknowledgments
 ---------------
 
